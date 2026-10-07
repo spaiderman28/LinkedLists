@@ -3,6 +3,7 @@
 // Name:
 // Date:
 // ============================================================
+package day1;
 
 public class LinkedList {
 
@@ -86,13 +87,13 @@ public class LinkedList {
         Node prev = null;
         Node cur = head;
         Node next = head.next;
-        while (next != null) {
-            Node y = cur.next;
+        while (cur != null) {
+            next = cur.next;
             cur.next = prev;
-            next = y.next;
             prev = cur;
-            cur = y;
+            cur = next;
         }
+        head = prev;
     }
 
     // ============================================================
@@ -100,8 +101,12 @@ public class LinkedList {
     //               forwards and backwards (palindrome check)
     // ============================================================
     public boolean isPalindrome() {
-        // TODO: implement
-        return false;
+        if (size <= 1) return true;
+        String cur = this.toString();
+        this.reverse();
+        String reversed = this.toString();
+        this.reverse();
+        return cur.equals(reversed);
     }
 
     // ============================================================
