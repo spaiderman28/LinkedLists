@@ -7,22 +7,123 @@ package day2;
 // (Build on top of your Day 1 implementation)
 // ============================================================
 
-public class LinkedList extends day1.LinkedList {
+public class LinkedList {
     private static class Node {
         String data;
         Node next;
-        Node(String data) { this.data = data; this.next = null; }
+
+        Node(String data) {
+            this.data = data;
+            this.next = null;
+        }
     }
+
     private Node head;
     private int size;
-    public LinkedList() { head = null; size = 0; }
+
+    public LinkedList() {
+        head = null;
+        size = 0;
+    }
+
+    // Add a node to the front of the list
+    public void addFirst(String data) {
+        Node newNode = new Node(data);
+        newNode.next = head;
+        head = newNode;
+    }
+
+    // Add a node to the end of the list
+    public void addLast(String data) {
+        Node x = head;
+
+        if (x == null) {
+            head = new Node(data);
+            ++size;
+            return;
+        }
+        while (x.next != null) {
+            x = x.next;
+        }
+
+        x.next = new Node(data);
+        ++size;
+    }
+
+    // Remove and return the first element
+    public String removeFirst() {
+        String data = head.data;
+        head = head.next;
+        return data;
+    }
+
+    // Return the number of elements
+    public int size() {
+        return size;
+    }
+
+    // Return true if the list is empty
+    public boolean isEmpty() {
+        return this.size() == 0;
+    }
+
+    // Return a string representation: [a -> b -> c -> null]
+    public String toString() {
+        String output = "[";
+        Node x = head;
+        while (x != null) {
+            output += x.data + " -> ";
+            x = x.next;
+        }
+        output += "null]";
+        return output;
+    }
+
+    // ============================================================
+    // CHALLENGE 1A: Reverse the linked list in place
+    // ============================================================
+    public void reverse() {
+        if (this.size <= 1) return;
+        Node prev = null;
+        Node cur = head;
+        Node next = head.next;
+        while (cur != null) {
+            next = cur.next;
+            cur.next = prev;
+            prev = cur;
+            cur = next;
+        }
+        head = prev;
+    }
+
+    // ============================================================
+    // CHALLENGE 1B: Return true if the list reads the same
+    //               forwards and backwards (palindrome check)
+    // ============================================================
+    public boolean isPalindrome() {
+        if (size <= 1) return true;
+        String cur = this.toString();
+        this.reverse();
+        String reversed = this.toString();
+        this.reverse();
+        return cur.equals(reversed);
+    }
 
     // ============================================================
 // CHALLENGE 2A: Return true if the list contains a cycle.
 // Use Floyd's Tortoise and Hare algorithm (two pointers).
 // ============================================================
     public boolean hasCycle() {
-// TODO: implement
+        if (head == null) {return false;}
+        Node t = head;
+        Node h = head;
+        while (h != null && h.next != null) {
+            t = t.next;
+            h = h.next.next;
+            if (t == h) {
+                return true;
+            }
+        }
         return false;
     }
     // ============================================================
@@ -33,15 +134,36 @@ public class LinkedList extends day1.LinkedList {
 // Use two pointers: one moves 1 step, one moves 2 steps.
 // ============================================================
     public String findMiddle() {
-// TODO: implement
-        return null;
+        if (head == null) {return null;}
+        Node t = head;
+        Node h = head;
+        while (h != null && h.next != null) {
+            t = t.next;
+            h = h.next.next;
+        }
+        return t.data;
     }
     // ============================================================
 // CHALLENGE 2C (BONUS): If a cycle exists, return the node
 // data where the cycle begins. Return null if no cycle.
 // ============================================================
     public String findCycleStart() {
-// TODO: implement
+        if (head == null) {return null;}
+        Node t = head;
+        Node h = head;
+        while (h != null && h.next != null) {
+            t = t.next;
+            h = h.next.next;
+            if (t == h) {
+                Node s = head;
+
+                while (s != t) {
+                    s = s.next;
+                    t = t.next;
+                }
+                return s.data;
+            }
+        }
         return null;
     }
     // Helper: creates a cycle for testing purposes only
@@ -61,7 +183,7 @@ public class LinkedList extends day1.LinkedList {
         System.out.println("===== CHALLENGE 2A: CYCLE DETECTION =====");
         LinkedList noCycle = new LinkedList();
         noCycle.addLast("a"); noCycle.addLast("b"); noCycle.addLast("c");
-        if (!(!noCycle.hasCycle())) {
+        if (noCycle.hasCycle()) {
             System.out.println("FAIL: list with no cycle should return false");
         } else {
             System.out.println("PASS: no cycle detected in normal list");
