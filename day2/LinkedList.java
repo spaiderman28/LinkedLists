@@ -7,77 +7,7 @@ package day2;
 // (Build on top of your Day 1 implementation)
 // ============================================================
 
-public class LinkedList {
-    private static class Node {
-        String data;
-        Node next;
-
-        Node(String data) {
-            this.data = data;
-            this.next = null;
-        }
-    }
-
-    private Node head;
-    private int size;
-
-    public LinkedList() {
-        head = null;
-        size = 0;
-    }
-
-    // Add a node to the front of the list
-    public void addFirst(String data) {
-        Node newNode = new Node(data);
-        newNode.next = head;
-        head = newNode;
-    }
-
-    // Add a node to the end of the list
-    public void addLast(String data) {
-        Node x = head;
-
-        if (x == null) {
-            head = new Node(data);
-            ++size;
-            return;
-        }
-        while (x.next != null) {
-            x = x.next;
-        }
-
-        x.next = new Node(data);
-        ++size;
-    }
-
-    // Remove and return the first element
-    public String removeFirst() {
-        String data = head.data;
-        head = head.next;
-        return data;
-    }
-
-    // Return the number of elements
-    public int size() {
-        return size;
-    }
-
-    // Return true if the list is empty
-    public boolean isEmpty() {
-        return this.size() == 0;
-    }
-
-    // Return a string representation: [a -> b -> c -> null]
-    public String toString() {
-        String output = "[";
-        Node x = head;
-        while (x != null) {
-            output += x.data + " -> ";
-            x = x.next;
-        }
-        output += "null]";
-        return output;
-    }
+public class LinkedList extends day1.LinkedList {
 
     // ============================================================
     // CHALLENGE 1A: Reverse the linked list in place

@@ -8,9 +8,9 @@ package day1;
 public class LinkedList {
 
     // ----- Node class (inner) -----
-    private static class Node {
-        String data;
-        Node next;
+    protected static class Node {
+        public String data;
+        public Node next;
 
         Node(String data) {
             this.data = data;
@@ -18,8 +18,8 @@ public class LinkedList {
         }
     }
 
-    private Node head;
-    private int size;
+    protected Node head;
+    protected int size;
 
     public LinkedList() {
         head = null;
@@ -31,6 +31,7 @@ public class LinkedList {
         Node newNode = new Node(data);
         newNode.next = head;
         head = newNode;
+        ++size;
     }
 
     // Add a node to the end of the list
@@ -54,6 +55,7 @@ public class LinkedList {
     public String removeFirst() {
         String data = head.data;
         head = head.next;
+        --size;
         return data;
     }
 
